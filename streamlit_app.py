@@ -23,7 +23,7 @@ def run():
     st.title('Income Prediction Using Regression')
 
     # File path input
-    file_path = st.text_input("Enter the path to the data file (CSV)", "data.csv/data.csv")
+    file_path = st.text_input("Enter the path to the data file (CSV)", "data.csv")
 
     try:
         # Load data
