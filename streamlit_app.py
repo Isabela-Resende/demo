@@ -22,15 +22,15 @@ def run():
     st.set_page_config(page_title="Income Prediction Based on Expenses")
     st.title('Income Prediction Using Regression')
 
-    # File path input (Updated to file uploader)
-    uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
-    
-    if uploaded_file is not None:
-        try:
-            # Load data
-            dataFrame = pd.read_csv(uploaded_file)
-            st.write(dataFrame)
+    # File path input
+    file_path = st.text_input("Enter the path to the data file (CSV)", "data.csv")
 
+    if uploaded_file is not None:
+       try:
+        # Load data
+        dataFrame = pd.read_csv(file_path)
+        st.write(dataFrame)
+    
             # Clean the data (remove duplicates)
             dataFrame.drop_duplicates(keep='first', inplace=True)
 
