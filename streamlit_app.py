@@ -123,31 +123,19 @@ def run():
         Occupation_encode = 1 if Occupation == 'Student' else (2 if Occupation == 'Self-Employed' else 0)
         City_Tier_encode = 1 if City_Tier == 'Tier_1' else (2 if City_Tier == 'Tier_2' else 0)
 
-        # Predict income (transformed) using the trained model
-predicted_Income_transformed = linear_model.predict([[
-    user_inputs[feature] for feature in numerical_features] + [Occupation_encode, City_Tier_encode]
-]])
+        # Predict income
+        predicted_Income_transformed = linear_model.predict([[
+            user_inputs[feature] for feature in numerical_features] + [Occupation_encode, City_Tier_encode]
+        ])
 
-# Clip the predictions to ensure they don't exceed a reasonable range
-min_value = 1e-5  # A small value to avoid negative or zero values
-max_value = 1e5   # Set a reasonable upper limit for predictions
+        # Reverse Box-Cox transformation
+        predicted_Income_transformed = inv_boxcox(predicted_Income_transformed, lambda_value)
 
-# Clip the transformed predictions before applying the inverse Box-Cox transformation
-predicted_Income_transformed = np.clip(predicted_Income_transformed, min_value, max_value)
+        # Display prediction
+        st.write(f'Predicted Income: {round(predicted_Income_transformed[0], 0)}')
 
-# Now apply the inverse Box-Cox transformation
-predicted_Income_transformed = inv_boxcox(predicted_Income_transformed, lambda_value)
-
-# Ensure the predicted income is positive (you might want to log or alert the user)
-predicted_Income_transformed = max(predicted_Income_transformed[0], 0)
-
-# Display prediction
-st.write(f'Predicted Income: ₹{round(predicted_Income_transformed, 0)}')
-
-       
     except Exception as e:
         st.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     run()
-
