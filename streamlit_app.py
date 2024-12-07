@@ -31,8 +31,8 @@ def run():
         dataFrame = pd.read_csv(file_path)
         st.write(dataFrame)
     
-            # Clean the data (remove duplicates)
-            dataFrame.drop_duplicates(keep='first', inplace=True)
+         # Clean the data (remove duplicates)
+        dataFrame.drop_duplicates(keep='first', inplace=True)
 
             # Check if required columns exist
             required_columns = ['Income', 'Age', 'Occupation', 'City_Tier', 'Rent', 'Loan_Repayment', 'Insurance', 
